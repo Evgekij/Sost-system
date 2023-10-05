@@ -2,7 +2,7 @@ import psutil
 
 
 def cpu_percent():
-    data = psutil.cpu_percent(interval= 1,percpu=False)
+    data = psutil.cpu_percent(interval= 1, percpu=False)
     cpu1 = {data}
   
     return cpu1
@@ -32,13 +32,15 @@ def percent_memory():
     
     return mem2
 
+
+def show_cpu_percent(a):
+    print("\n{:>45}".format("Состояние системы:"))
+    for el in a:
+        print( "\nТекущая загрузка ЦП:", el, "%")
+
 def show_mem_percent():
     for el in percent_memory():
        print("\nСвободная память ПК:", el,"%") 
-
-def show_cpu_percent(a):
-    for el in a:
-        print( "\nТекущая загрузка ЦП:", el, "%")
 
 def show_cpu_times():
     print("\nВремя работы ЦП:")
@@ -56,6 +58,7 @@ def show_virtual_memory():
         print(f"{key:10}:{value:10}","bytes")
 
 def show_proc():
+    print("\n{:>55}".format("Список запущенных процессов:"))
     for proc in psutil.process_iter(["pid","name","username"]):
         i = 0
         for key,value in (proc.info).items():
@@ -66,13 +69,12 @@ def show_proc():
             print(f"{key:<5}:{value:<30}")
             i = 0
 
+
 def main():
-    print("\n{:>45}".format("Состояние системы:"))
     show_cpu_percent(a())
     show_mem_percent()
     show_cpu_freq()
     show_cpu_times()
     show_virtual_memory()
-    print("\n{:>55}".format("Список запущенных процессов:"))
     show_proc()
 main()
